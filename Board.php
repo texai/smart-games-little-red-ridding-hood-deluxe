@@ -3,6 +3,7 @@
 class Board {
 
     protected $model = null;
+    protected $house = null;
 
     public function __construct(){
         $this->model = [[Tile::create(),Tile::create(),Tile::create(),Tile::create()],
@@ -29,6 +30,8 @@ class Board {
             $y = rand(0,3);
         }while(!$this->model[$x][$y]->isEmpty());
         $this->model[$x][$y] = Tile::create(Tile::TYPE_HOUSE)->setRandomOrientation();
+        $this->house = $this->model[$x][$y];
+        $this->house->setXY($x, $y);
     }
 
     public function setLrrhRandomly(){
@@ -80,7 +83,20 @@ class Board {
     }
 
     public function validate(){
+        echo "Validation: Door is ";
+        echo $this->isHouseDoorUnblocked()?'Unblocked':'Blocked';
+        echo PHP_EOL;
+    }
 
+    public function isHouseDoorUnblocked(){
+        $h = $this->house;
+        $o = $h->getOrientation();
+        $x = $h->getX();
+        $y = $h->getY();
+        if ($x==0 && $o == Tile::ORIENTATION_N) return false;
+        if ($x==3 && $o == Tile::ORIENTATION_S) return false;
+        if ($y==0 && $o == Tile::ORIENTATION_W) return false;
+        if ($y==3 && $o == Tile::ORIENTATION_E) return false;
         return true;
     }
 

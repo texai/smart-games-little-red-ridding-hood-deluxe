@@ -15,6 +15,8 @@ class Tile {
 
     protected $type;
     protected $orientation;
+    protected $x;
+    protected $y;
 
     static $valid_orientations = [self::ORIENTATION_N, self::ORIENTATION_E, self::ORIENTATION_S, self::ORIENTATION_W];
 
@@ -41,6 +43,24 @@ class Tile {
 
     public function __toString(){
         return "[".$this->type.(is_null($this->orientation)?' ':$this->orientation)." ]";
+    }
+
+    public function setXY($x,$y){
+        $this->x = $x;
+        $this->y = $y;
+        return $this;
+    }
+
+    public function getX(){
+        return $this->x;
+    }
+
+    public function getY(){
+        return $this->y;
+    }
+
+    public function getOrientation(){
+        return $this->orientation;
     }
 
 }
