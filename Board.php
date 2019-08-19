@@ -48,11 +48,6 @@ class Board {
     }
 
     public function setPathRandomly(){
-        // do{
-        //     $x = rand(0,3);
-        //     $y = rand(0,3);
-        // }while(!$this->model[$x][$y]->isEmpty());
-        // $this->model[$x][$y] = Tile::create(Tile::TYPE_PATH)->setRandomOrientation();
 
         $originalPaths = TileGroup::generateOriginalPathsTileGroups();
         
@@ -61,7 +56,6 @@ class Board {
             $randomOriginalPathTileGroup = $originalPaths[$randomIndex];
             $x = rand(0,3);
             $y = rand(0,3);
-            // echo __METHOD__.'(1)'.PHP_EOL;
         }while( $x==0 || !$this->model[$x][$y]->isEmpty() || !$this->model[$x-1][$y]->isEmpty() );
         $tilesPath = $randomOriginalPathTileGroup->getTiles();
         $this->model[$x][$y] = $tilesPath[0];
@@ -72,7 +66,6 @@ class Board {
             $randomOriginalPathTileGroup = $originalPaths[$randomIndex2];
             $x = rand(0,3);
             $y = rand(0,3);
-            // echo __METHOD__.'(2)'.PHP_EOL;
         }while( $randomIndex==$randomIndex2 || $x==0 || !$this->model[$x][$y]->isEmpty() || !$this->model[$x-1][$y]->isEmpty() );
         $tilesPath = $randomOriginalPathTileGroup->getTiles();
         $this->model[$x][$y] = $tilesPath[0];
@@ -87,9 +80,6 @@ class Board {
     }
 
     public function validate(){
-
-        
-
 
         return true;
     }
