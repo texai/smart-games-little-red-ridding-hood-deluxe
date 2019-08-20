@@ -83,9 +83,18 @@ class Board {
     }
 
     public function validate(){
-        echo "Validation: Door is ";
-        echo $this->isHouseDoorUnblocked()?'Unblocked':'Blocked';
-        echo PHP_EOL;
+        echo "VAL: Door is ".($this->isHouseDoorUnblocked()?'Unb':'B')."locked".PHP_EOL;
+        echo "VAL: Door IS".($this->isHouseDoorNextToPath()?'':' NOT')." NEAR to path".PHP_EOL;
+        $this->currentTile = $this->house;
+        do{
+            $this->nextTile = $this->calculateNextTile();
+            $this->validatePathsMatch();
+        }while($this->nextTile->getType!=Tile::TYPE_LRRH);
+
+    }
+
+    public function calculateNextTile(){
+
     }
 
     public function isHouseDoorUnblocked(){
@@ -98,6 +107,22 @@ class Board {
         if ($y==0 && $o == Tile::ORIENTATION_W) return false;
         if ($y==3 && $o == Tile::ORIENTATION_E) return false;
         return true;
+    }
+
+    public function isHouseDoorNextToPath(){
+        $h = $this->house;
+        $o = $h->getOrientation();
+        $x = $h->getX();
+        $y = $h->getY();
+        $nextToDoorX = $x;
+        $nextToDoorY = $y;
+        if ($o == Tile::ORIENTATION_N) $nextToDoorX = $x - 1;
+        if ($o == Tile::ORIENTATION_S) $nextToDoorX = $x + 1;
+        if ($o == Tile::ORIENTATION_W) $nextToDoorY = $y - 1;
+        if ($o == Tile::ORIENTATION_E) $nextToDoorY = $y + 1;
+        if($this->model[$nextToDoorX][$nextToDoorY]->getType() == Tile::TYPE_PATH)
+            return true;
+        return false;
     }
 
     public function getModel(){

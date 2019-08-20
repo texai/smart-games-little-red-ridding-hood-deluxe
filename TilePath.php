@@ -18,6 +18,8 @@ class TilePath extends Tile{
                                     self::EDGE_S=>self::EDGE_E,
                                     self::EDGE_E=>self::EDGE_N];
 
+    
+
     public function __construct(array $walkableEdges = null){
         parent::__construct(Tile::TYPE_PATH);
         $this->walkableEdges = is_null($walkableEdges)?[]:$walkableEdges;
